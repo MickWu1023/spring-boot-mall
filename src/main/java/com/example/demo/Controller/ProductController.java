@@ -5,6 +5,7 @@ import com.example.demo.Constant.ProductQueryParms;
 import com.example.demo.Model.Product;
 import com.example.demo.Service.ProductService;
 import com.example.demo.dto.ProductRequest;
+import com.example.demo.util.Page;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -22,7 +23,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<Page<Product>> getProducts(
             //filtering
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false)  String search,
@@ -40,9 +41,17 @@ public class ProductController {
         productQueryParms.setSort(sort);
         productQueryParms.setLimit(limit);
         productQueryParms.setOffset(offset);
-
+        //取得product list
         List<Product> productList =  productService.getProducts(productQueryParms);
-        return  ResponseEntity.status(HttpStatus.OK).body(productList);
+        //取得product 總數
+        Integer total = productService.countProduct(productQueryParms);
+        //分頁
+        Page<Product> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResults(productList);
+        return  ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
     @GetMapping("/products/{productId}")
