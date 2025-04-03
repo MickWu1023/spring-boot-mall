@@ -1,6 +1,5 @@
 package com.example.demo.Dao.impl;
 
-import com.example.demo.Constant.ProductCategory;
 import com.example.demo.Constant.ProductQueryParms;
 import com.example.demo.Dao.ProductDao;
 import com.example.demo.Model.Product;
@@ -37,6 +36,8 @@ public class ProductDaoImpl implements ProductDao {
             sql = sql+ " and product_name LIKE :search";
             map.put("search","%"+productQueryParms.getSearch()+"%" );
         }
+        sql = sql+ " order by " + productQueryParms.getOrderby() + " "+productQueryParms.getSort();
+
         List<Product> productList = namedParameterJdbcTemplate.query(sql,map,new ProductRowmapper());
         return productList ;
     }
