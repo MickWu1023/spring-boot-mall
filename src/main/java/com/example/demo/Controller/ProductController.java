@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Constant.ProductCategory;
+import com.example.demo.Constant.ProductQueryParms;
 import com.example.demo.Model.Product;
 import com.example.demo.Service.ProductService;
 import com.example.demo.dto.ProductRequest;
@@ -19,9 +20,12 @@ public class ProductController {
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts(
             @RequestParam(required = false) ProductCategory category,
-            @RequestParam(required = false)  String search
+                @RequestParam(required = false)  String search
             ){
-        List<Product> productList =  productService.getProducts(category ,search);
+        ProductQueryParms  productQueryParms = new ProductQueryParms();
+        productQueryParms.setCategory(category);
+        productQueryParms.setSearch(search);
+        List<Product> productList =  productService.getProducts(productQueryParms);
         return  ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 

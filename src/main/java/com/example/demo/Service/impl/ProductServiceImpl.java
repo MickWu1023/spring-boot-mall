@@ -1,6 +1,7 @@
 package com.example.demo.Service.impl;
 
 import com.example.demo.Constant.ProductCategory;
+import com.example.demo.Constant.ProductQueryParms;
 import com.example.demo.Dao.ProductDao;
 import com.example.demo.Model.Product;
 import com.example.demo.Service.ProductService;
@@ -36,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts(ProductCategory category , String search) {
-        return productDao.getProducts(category ,search);
+    public List<Product> getProducts(ProductQueryParms  productQueryParms  ) {
+        return productDao.getProducts(productQueryParms);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.Dao.impl;
 
 import com.example.demo.Constant.ProductCategory;
+import com.example.demo.Constant.ProductQueryParms;
 import com.example.demo.Dao.ProductDao;
 import com.example.demo.Model.Product;
 import com.example.demo.Rowmapper.ProductRowmapper;
@@ -23,18 +24,18 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts(ProductCategory category , String search) {
+    public List<Product> getProducts(ProductQueryParms productQueryParms) {
         String sql ="select product_id,product_name, category, image_url, price, stock, description," +
                 " created_date, last_modified_date " +
                 "from product where 1=1";
         Map<String,Object> map = new HashMap<>();
-        if(category!=null){
+        if(productQueryParms.getCategory()!=null){
             sql = sql+ " and category=:category";
-            map.put("category",category.name());
+            map.put("category",productQueryParms.getCategory().name());
         }
-        if(search!=null){
+        if(productQueryParms.getSearch()!=null){
             sql = sql+ " and product_name LIKE :search";
-            map.put("search","%"+search+"%" );
+            map.put("search","%"+productQueryParms.getSearch()+"%" );
         }
         List<Product> productList = namedParameterJdbcTemplate.query(sql,map,new ProductRowmapper());
         return productList ;
