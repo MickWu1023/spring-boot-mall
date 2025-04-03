@@ -1,5 +1,6 @@
 package com.example.demo.Rowmapper;
 
+import com.example.demo.Constant.ProductCategory;
 import com.example.demo.Model.Product;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -12,9 +13,12 @@ public class ProductRowmapper implements RowMapper<Product> {
         Product product = new Product();
         product.setProductId(rs.getInt("product_id"));
         product.setProductName(rs.getString("product_name"));
-        product.setCategory(rs.getString("category"));
+
+        String categoryStr = rs.getString("category");
+        ProductCategory category = ProductCategory.valueOf(categoryStr);
+        product.setCategory(category);
         product.setImageUrl(rs.getString("image_url"));
-        product.setPrice(rs.getInt("price"));
+        product.setPrice(   rs.getInt("price"));
         product.setStock(rs.getInt("stock"));
         product.setDescription(rs.getString("description"));
         product.setCreatedDate(rs.getTimestamp("created_date"));

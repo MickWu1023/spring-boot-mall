@@ -1,37 +1,23 @@
 package com.example.demo.Model;
 
+import com.example.demo.Constant.ProductCategory;
+
 import java.util.Date;
 
 public class Product {
     private Integer productId;
     private String productName;
-    private String category;
+    private ProductCategory category;
     private String imageUrl;
     private Integer price;
     private Integer stock;
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
     private String description;
-    private Date createDate;
-    private Date lastModifiedDate;
+    private Date createdDate;
+    private Date modifiedDate;
     public Integer getProductId() {
         return productId;
     }
+
 
     public void setProductId(Integer productId) {
         this.productId = productId;
@@ -45,11 +31,11 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getCategory() {
+    public ProductCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ProductCategory category) {
         this.category = category;
     }
 
@@ -101,6 +87,4 @@ public class Product {
         this.modifiedDate = modifiedDate;
     }
 
-    private Date createdDate;
-    private Date modifiedDate;
 }
