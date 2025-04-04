@@ -15,10 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Validated
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -64,7 +67,13 @@ public class ProductController {
             }
 
     }
-
+    @GetMapping("/users")
+    public List<Map<String, String>> getUsers() {
+        List<Map<String, String>> users = new ArrayList<>();
+        users.add(Map.of("id", "1", "name", "Alice"));
+        users.add(Map.of("id", "2", "name", "Bob"));
+        return users;
+    }
     @PostMapping("/products")
     public ResponseEntity<Product> createProduct(@RequestBody  @Valid ProductRequest productRequest) {
         Integer productId  = productService.createProduct(productRequest);
