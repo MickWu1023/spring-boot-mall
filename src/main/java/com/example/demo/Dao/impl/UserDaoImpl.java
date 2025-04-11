@@ -58,6 +58,7 @@ public class UserDaoImpl implements UserDao {
         map.put("createdDate",date);
         map.put("lastModifiedDate", date);
         KeyHolder keyHolder = new GeneratedKeyHolder();
+        //它會自動從 map 中讀取對應的值，把 SQL 中的 :email 取代成 map 裡的 email 對應的值。
         namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(map), keyHolder);
         Integer userId = keyHolder.getKey().intValue();
         return userId;

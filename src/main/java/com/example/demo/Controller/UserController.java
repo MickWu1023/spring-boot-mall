@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Model.User;
 import com.example.demo.Service.UserService;
+import com.example.demo.dto.UserLoginRequest;
 import com.example.demo.dto.UserRegisterRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,12 @@ public class UserController {
     public User getUserById(@PathVariable("userId") Integer userId) {
         User user =  userService.getUserById(userId);
                 return user;
+    }
+    @PostMapping("/users/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest) {
+        User user = userService.login(userLoginRequest);
+        return  ResponseEntity.status(HttpStatus.OK).body(user);
+
     }
 }
 
